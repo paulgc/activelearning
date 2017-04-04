@@ -5,14 +5,14 @@ Created on Mar 7, 2017
 '''
 
 
-class Labeler(object):
+class LabelerBase(object):
 
-    """Label the queries made by ExampleSelector
-
-    Assign labels to the samples queried by ExampleSelector.
-    """
-    def label(self, feature):
-        """Return the class labels for the input feature array.
+    
+    def __init__(self, label_names):
+        self.label_names = label_names
+        
+    def get_label(self, feature):
+        """Queries and returns the class labels for the input feature array.
 
         Parameters
         ----------
