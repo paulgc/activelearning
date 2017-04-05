@@ -24,9 +24,9 @@ class SmallestMarginBasedExampleSampler(UncertainityBasedExampleSampler):
         self.batch_size = batch_size
     
     def _compute_margin(self, probability):
-        return np.diff(-probability * np.log(probability))
+        return (probability[0] - probability[1])
     
-    def utilityExample(self, probability):
+    def _utility_example(self, probability):
         return self._compute_margin(probability)
     
     def next_examples(self, unlabeled_dataset, feature_attrs):
@@ -43,7 +43,7 @@ class SmallestMarginBasedExampleSampler(UncertainityBasedExampleSampler):
             return unlabeled_dataset.iloc[next_batch_idxs]
         else:
             probabilities = self.model.predict_proba(unlabeled_dataset[feature_attrs].values)
-            entropy = np.sum(-probabilities * np.log(probabilities), axis=1)
+            entropy = np.diff(probabilities, axis=1)
             example_id = np.argmax(entropy)
             return unlabeled_dataset.iloc[example_id]
     

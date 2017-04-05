@@ -12,5 +12,5 @@ class UncertainityBasedExampleSampler(ExampleSampler):
         super(UncertainityBasedExampleSampler, self).__init__()
         self.model = model
         
-    def utilityExample(self):
+    def _utility_example(self):
         raise NotImplementedError( "Should have implemented this" )

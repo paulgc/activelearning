@@ -23,9 +23,9 @@ class EntropyBasedExampleSampler(UncertainityBasedExampleSampler):
         return self._compute_entropy(probability)
     
     
-    def next_examples(self, unlabeled_dataset, feature_attrs):
+    def select_examples(self, unlabeled_dataset, feature_attrs, batch_size=1):
         # compute the prediction probabilities for the unlabeled dataset
-        if self.batch_mode:
+        if batch_size > 1:
             probabilities = self.model.predict_proba(unlabeled_dataset[feature_attrs].values) 
             # compute the entropy for the unlabeled pairs
             entropies = {}
@@ -36,9 +36,3 @@ class EntropyBasedExampleSampler(UncertainityBasedExampleSampler):
             next_batch_idxs = []
             next_batch_idxs = map(lambda val: val[0], candidate_examples)
             return unlabeled_dataset.iloc[next_batch_idxs]
-        else:
-            
-            probabilities = self.model.predict_proba(unlabeled_dataset[feature_attrs].values)
-            entropy = np.sum(-probabilities * np.log(probabilities), axis=1)
-            example_id = np.argmax(entropy)
-            return unlabeled_dataset.iloc[example_id]
