@@ -25,13 +25,15 @@ class EntityMatchingCliLabeler(CliLabeler):
         '''
             Display only the attributes specified by user for labeling
         '''
-        return str(candidate_pair[0][self.A_out_attrs]) + "\n" + str(candidate_pair[1][self.B_out_attrs]) + "\n"
+        banner_str = "Select whether the given below pair is a Match(1) or Non Match(0)" + "\n"
+        return banner_str + str(candidate_pair[0][self.A_out_attrs]) + "\n" + str(candidate_pair[1][self.B_out_attrs]) + "\n"
         
     def label(self, examples_to_label, label_attr='label'):
         
         table_A_ids = examples_to_label[self.fvs_A_id_attr]
         table_B_ids = examples_to_label[self.fvs_B_id_attr]
         
+        #list of original examples to label
         pairs_to_label = []
          
         for table_A_id,table_B_id in itertools.izip(table_A_ids,table_B_ids):
