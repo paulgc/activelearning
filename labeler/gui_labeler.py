@@ -1,6 +1,6 @@
-'''
-Created on Mar 7, 2017
 
-@author: lokananda
-'''
-
+from labeler.labeler import Labeler                                             
+                                                                                
+class GuiLabeler(Labeler):
+    def __init__(self):
+        pass  
