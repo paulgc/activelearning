@@ -13,13 +13,13 @@ Created on Mar 4, 2017
 import operator
 import numpy as np
 
-from uncertainity_based_example_sampler import UncertainityBasedExampleSampler
+from examplesampler.uncertainity_based_example_selector import UncertainityBasedExampleSelector
 from util.weighted_random_sampler import  WeightedRandomSampler
 
-class SmallestMarginBasedExampleSampler(UncertainityBasedExampleSampler):
+class SmallestMarginBasedExampleSelector(UncertainityBasedExampleSelector):
     
     def __init__(self, model, batch_mode, batch_size=5):
-        super(SmallestMarginBasedExampleSampler, self).__init__(model)
+        super(SmallestMarginBasedExampleSelector, self).__init__(model)
         self.batch_mode = batch_mode
         self.batch_size = batch_size
     
