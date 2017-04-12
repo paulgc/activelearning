@@ -36,9 +36,6 @@ class ActiveLearner(object):
 
             # remove labeled examples from the unlabeled dataset 
             # TODO: NOT SURE IF THIS WILL WORK CORRECTLY. TEST THIS
-            # TODO: NOT SURE IF THIS WILL WORK CORRECTLY. TEST THIS
-            # TODO: NOT SURE IF THIS WILL WORK CORRECTLY. TEST THIS
-            # TODO: NOT SURE IF THIS WILL WORK CORRECTLY. TEST THIS                    
             unlabeled_dataset = unlabeled_dataset.drop(labeled_examples.index) 
 
             # update the labeled dataset
