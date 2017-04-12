@@ -1,5 +1,5 @@
 
-from examplesampler.example_selector import ExampleSelector
+from activelearning.exampleselector.example_selector import ExampleSelector
 
 class UncertainityBasedExampleSelector(ExampleSelector):
     """

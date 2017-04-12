@@ -2,7 +2,7 @@
 import operator
 import numpy as np
 
-from examplesampler.uncertainity_based_example_selector import UncertainityBasedExampleSelector
+from activelearning.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
