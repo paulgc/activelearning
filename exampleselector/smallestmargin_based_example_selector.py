@@ -1,25 +1,13 @@
-'''
-Created on Mar 7, 2017
 
-@author: lokananda
-'''
-
-
-'''
-Created on Mar 4, 2017
-
-@author: lokananda
-'''
 import operator
 import numpy as np
 
 from examplesampler.uncertainity_based_example_selector import UncertainityBasedExampleSelector
-from util.weighted_random_sampler import  WeightedRandomSampler
 
 class SmallestMarginBasedExampleSelector(UncertainityBasedExampleSelector):
     
-    def __init__(self, model, batch_mode, batch_size=5):
-        super(SmallestMarginBasedExampleSelector, self).__init__(model)
+    def __init__(self, batch_mode, batch_size=5):
+        super(SmallestMarginBasedExampleSelector, self).__init__()
         self.batch_mode = batch_mode
         self.batch_size = batch_size
     
@@ -29,9 +17,15 @@ class SmallestMarginBasedExampleSelector(UncertainityBasedExampleSelector):
     def _utility_example(self, probability):
         return self._compute_margin(probability)
     
-    def next_examples(self, unlabeled_dataset, feature_attrs):
+    def next_examples(self, unlabeled_dataset, model, exclude_attrs=None):
+        # remove exclude attrs                                                  
+        feature_attrs = list(unlabeled_dataset.columns)                         
+        if exclude_attrs:                                                       
+            for attr in exclude_attrs:                                          
+                feature_attrs.remove(attr)   
+
         if self.batch_mode:
-            probabilities = self.model.predict_proba(unlabeled_dataset[feature_attrs].values) 
+            probabilities = model.predict_proba(unlabeled_dataset[feature_attrs].values) 
             # compute the entropy for the unlabeled pairs
             margins = {}
             for i in xrange(len(probabilities)):
@@ -42,7 +36,7 @@ class SmallestMarginBasedExampleSelector(UncertainityBasedExampleSelector):
             next_batch_idxs = map(lambda val: val[0], candidate_examples)
             return unlabeled_dataset.iloc[next_batch_idxs]
         else:
-            probabilities = self.model.predict_proba(unlabeled_dataset[feature_attrs].values)
+            probabilities = model.predict_proba(unlabeled_dataset[feature_attrs].values)
             entropy = np.diff(probabilities, axis=1)
             example_id = np.argmax(entropy)
             return unlabeled_dataset.iloc[example_id]

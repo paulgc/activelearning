@@ -1,8 +1,4 @@
-'''
-Created on Mar 4, 2017
 
-@author: lokananda
-'''
 import unittest
 
 from nose.tools import *
@@ -12,7 +8,7 @@ import operator
 import os
 
 from sklearn import linear_model
-from examplesampler.entropy_based_example_selector import EntropyBasedExampleSelector
+from exampleselector.entropy_based_example_selector import EntropyBasedExampleSelector
 
 class EntropySelectorTests(unittest.TestCase):
     def setUp(self):
@@ -39,27 +35,23 @@ class EntropySelectorTests(unittest.TestCase):
 
     #testing non batch mode
     def test_next_example(self):
-        es = EntropyBasedExampleSelector(self.model)
+        es = EntropyBasedExampleSelector()
         
-        feature_attrs = list(self.unlabeled_dataset.columns)
-        feature_attrs.remove('_id')
-        feature_attrs.remove('l_ID')
-        feature_attrs.remove('r_ID')
-        
-        instance_to_be_labeled = es.select_examples(self.unlabeled_dataset.head(5), feature_attrs)
+        instance_to_be_labeled = es.select_examples(
+                                     self.unlabeled_dataset.head(5), self.model, 
+                                     ['_id', 'l_ID', 'r_ID'])
   
         assert_equal(0,instance_to_be_labeled["_id"])
     
     
     #testing batch mode
     def test_select_examples(self):
-        es = EntropyBasedExampleSelector(self.model)
-        feature_attrs = list(self.unlabeled_dataset.columns)
-        feature_attrs.remove('_id')
-        feature_attrs.remove('l_ID')
-        feature_attrs.remove('r_ID')
+        es = EntropyBasedExampleSelector()
         
-        instances_to_be_labeled = es.select_examples(self.unlabeled_dataset.head(5), feature_attrs)
+        instances_to_be_labeled = es.select_examples(
+                                      self.unlabeled_dataset.head(5), self.model,
+                                      ['_id', 'l_ID', 'r_ID'])
+
         assert_equal(0,instances_to_be_labeled.iloc[0]["_id"])
         assert_equal(3,instances_to_be_labeled.iloc[1]["_id"])
         

@@ -1,25 +1,29 @@
-'''
-Created on Mar 4, 2017
 
-@author: lokananda
-'''
 import operator
 import numpy as np
 
 from examplesampler.uncertainity_based_example_selector import UncertainityBasedExampleSelector
-from util.weighted_random_sampler import  WeightedRandomSampler
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
-    def __init__(self, model):
-        super(EntropyBasedExampleSelector, self).__init__(model)
+    def __init__(self):
+        super(EntropyBasedExampleSelector, self).__init__()
     
     def _compute_entropy(self, probability):
         return np.sum(-probability * np.log(probability))
     
-    def select_examples(self, unlabeled_dataset, feature_attrs, batch_size=1):
+    def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, 
+                        batch_size=1):
+
+        # remove exclude attrs
+        feature_attrs = list(unlabeled_dataset.columns)
+        if exclude_attrs:
+            for attr in exclude_attrs:
+                feature_attrs.remove(attr)
+
         # compute the prediction probabilities for the unlabeled dataset
-        probabilities = self.model.predict_proba(unlabeled_dataset[feature_attrs].values) 
+        probabilities = model.predict_proba(unlabeled_dataset[feature_attrs].values) 
+
         # compute the entropy for the unlabeled pairs
         entropies = {}
         for i in xrange(len(probabilities)):

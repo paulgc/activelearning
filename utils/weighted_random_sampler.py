@@ -1,8 +1,4 @@
-'''
-Created on Mar 6, 2017
 
-@author: lokananda
-'''
 from array import array
 import random
 from bisect import bisect

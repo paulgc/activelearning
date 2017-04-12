@@ -1,8 +1,4 @@
-'''
-Created on Mar 31, 2017
 
-@author: lokananda
-'''
 import itertools
 
 
