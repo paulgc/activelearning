@@ -9,7 +9,7 @@ class ActiveLearner(object):
         self.num_iters = num_iters
         self._labeled_dataset_ = None
 
-    def learn(unlabeled_dataset, seed, exclude_attrs=None, context=None, 
+    def learn(self, unlabeled_dataset, seed, exclude_attrs=None, context=None, 
               label_attr='label'):
        # remove exclude attrs                                                  
         feature_attrs = list(unlabeled_dataset.columns)                         
