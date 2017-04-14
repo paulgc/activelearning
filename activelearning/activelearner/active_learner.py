@@ -1,3 +1,5 @@
+from activelearning.utils.validation import validate_input_table
+from activelearning.utils.validation import validate_attr
 
 class ActiveLearner(object):
 
@@ -11,7 +13,13 @@ class ActiveLearner(object):
 
     def learn(self, unlabeled_dataset, seed, exclude_attrs=None, context=None, 
               label_attr='label'):
-       # remove exclude attrs                                                  
+       # remove exclude attrs
+        validate_input_table(unlabeled_dataset, 'unlabeled dataset')
+        validate_input_table(seed, 'seed')
+        
+        for attr in exclude_attrs:
+            validate_attr(attr, unlabeled_dataset.columns, "attr", 'unlabeled_dataset')
+            
         feature_attrs = list(unlabeled_dataset.columns)                         
         if exclude_attrs:                                                       
             for attr in exclude_attrs:                                          

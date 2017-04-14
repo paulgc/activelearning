@@ -27,15 +27,7 @@ class ActiveLearnerTests(unittest.TestCase):
         labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), '/Data/seed.csv'),  sep='\t')
         
         self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), '/Data/seed.csv'), sep='\t')
-        self.model = linear_model.LogisticRegression()
-        
-        feature_attrs = list(self.unlabeled_dataset.columns)
-        feature_attrs.remove('_id')
-        feature_attrs.remove('l_ID')
-        feature_attrs.remove('r_ID')
-        self.model.fit(self.unlabeled_dataset[feature_attrs].values[:3],
-                                            labeled_dataset_seed['label'].values[:3])
-        
+
         #create a model
         model = RandomForestClassifier()   
         #create a labeler
