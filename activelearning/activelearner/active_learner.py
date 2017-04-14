@@ -26,7 +26,7 @@ class ActiveLearner(object):
                                         labeled_dataset[label_attr].values)
 
             # select current batch of examples to label
-            selected_examples = self.example_selector(unlabeled_dataset, 
+            selected_examples = self.example_selector.select_examples(unlabeled_dataset, 
                                                       self.model, exclude_attrs,
                                                       self.batch_size)
 
