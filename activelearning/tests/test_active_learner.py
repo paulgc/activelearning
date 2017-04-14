@@ -24,12 +24,9 @@ class ActiveLearnerTests(unittest.TestCase):
 #         dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_A.csv')).head(1000)
 #         dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_B.csv')).head(1000)
         # labeled data, typically small in number in DataFrame format
-        labeled_dataset_seed = pd.read_csv('/Users/lokananda/Documents/IndependentStudy/activelearning/activelearning/tests/Data/seed.csv',  sep='\t')
+        labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), '/Data/seed.csv'),  sep='\t')
         
-        # merge the original unlabeled data with labeled Data
-        #self.unlabeled_dataset = self.getPartiallyLabelledDatset(dataset_a, dataset_b, labeled_dataset_seed)
-        
-        self.unlabeled_dataset = pd.read_csv("/Users/lokananda/Documents/IndependentStudy/activelearning/activelearning/tests/Data/sample_data.csv", sep='\t')
+        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), '/Data/seed.csv'), sep='\t')
         self.model = linear_model.LogisticRegression()
         
         feature_attrs = list(self.unlabeled_dataset.columns)
