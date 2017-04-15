@@ -12,6 +12,8 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     def __init__(self):
         super(EntropyBasedExampleSelector, self).__init__()
     
+    def _compute_entropy(self, probability):
+        return np.sum(-probability * np.log(probability))
     
     def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, 
                         batch_size=1):

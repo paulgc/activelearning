@@ -16,17 +16,22 @@ class ActiveLearnerTests(unittest.TestCase):
     
     def sample_get_instruction_fn(self, context):
         return "Can you enter the label y or n?"
+
     def get_example_display_fn(self, example, context):
-        return example
+        table_a = context["dataset_a"]
+        table_b = context["dataset_b"]
+        example_A = table_a[table_a["A.ID"] == example["l_ID"]]
+        example_B = table_b[table_b["B.ID"] == example["r_ID"]]
+        return example_A + example_B
 
     def setUp(self):
-
-#         dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_A.csv')).head(1000)
-#         dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_B.csv')).head(1000)
+        dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_A.csv')).head(1000)
+        dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_B.csv')).head(1000)
+        context = {"dataset_a": dataset_a, "dataset_b": dataset_b }
         # labeled data, typically small in number in DataFrame format
-        labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), '/Data/seed.csv'),  sep='\t')
-        
-        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), '/Data/seed.csv'), sep='\t')
+        labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/seed.csv'),  sep='\t')
+    
+        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/seed.csv'), sep='\t')
 
         #create a model
         model = RandomForestClassifier()   
@@ -38,11 +43,10 @@ class ActiveLearnerTests(unittest.TestCase):
         selector  = EntropyBasedExampleSelector()
         #create a learner
         alearner = ActiveLearner(model, selector, labeler, 1, 1)
-        
-        alearner.learn(self.unlabeled_dataset, labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=None, label_attr='label')
+        alearner.learn(self.unlabeled_dataset, labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=context, label_attr='label')
 
     #testing non batch mode
     def test_learn(self):
         assert_equal(0,0)
-    
+        
         
