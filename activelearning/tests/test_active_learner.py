@@ -22,7 +22,7 @@ class ActiveLearnerTests(unittest.TestCase):
         table_b = context["dataset_b"]
         example_A = table_a[table_a["A.ID"] == example["l_ID"]]
         example_B = table_b[table_b["B.ID"] == example["r_ID"]]
-        return example_A + example_B
+        return str(example_A) + "\n" + str(example_B)
 
     def setUp(self):
         dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_A.csv')).head(1000)
@@ -31,7 +31,7 @@ class ActiveLearnerTests(unittest.TestCase):
         # labeled data, typically small in number in DataFrame format
         labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/seed.csv'),  sep='\t')
     
-        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/seed.csv'), sep='\t')
+        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/sample_fvs.csv'), sep='\t')
 
         #create a model
         model = RandomForestClassifier()   

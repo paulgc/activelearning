@@ -18,6 +18,7 @@ class CliLabeler(Labeler):
             return False
         
     def label(self, examples_to_label, context, label_attr='label'):
+        #Show the instruction to the user 
         print(self.get_instruction_fn(context))
         user_labels = []
         for idx, example in examples_to_label.iterrows():
@@ -26,8 +27,9 @@ class CliLabeler(Labeler):
             if self.validate_input(label_str):
                 user_labels.append(self.labels[label_str])
             else:
+                #Display error message if user enters a wrong label
                 print "Incorrect Label. Pls try again"
-                self.label(self, examples_to_label, context, label_attr='label')
+                self.label(examples_to_label, context, label_attr='label')
             
 
         examples_to_label[label_attr] = user_labels
