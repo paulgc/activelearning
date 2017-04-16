@@ -5,7 +5,7 @@ import activelearning.utils.validation
 from activelearning.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
 
 from activelearning.utils.validation import validate_input_table
-
+from activelearning.utils.validation import validate_attr
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
@@ -20,6 +20,10 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
         
         # check if the input candset is a dataframe
         validate_input_table(unlabeled_dataset, 'unlabeled dataset')
+        
+        #validate exclude attr
+        for attr in exclude_attrs:
+            validate_attr(attr, unlabeled_dataset.columns, "attr", 'unlabeled_dataset')
         
         # remove exclude attrs
         feature_attrs = list(unlabeled_dataset.columns)
