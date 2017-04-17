@@ -32,7 +32,7 @@ class ActiveLearnerTests(unittest.TestCase):
         self.labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/seed.csv'),  sep='\t')
     
         self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/sample_fvs.csv'), sep='\t')
-
+        
         #create a model
         self.model = RandomForestClassifier()   
         #create a labeler
@@ -50,10 +50,16 @@ class ActiveLearnerTests(unittest.TestCase):
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
         assert_equal(0,0)
     
-    #testing non batch mode
+    #testing batch mode
     def test_active_learn_batch(self):
         #create a learner
         alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
         assert_equal(0,0)    
-        
+    
+    def test_active_learn_different_model(self):
+        #create a learner
+        alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
+        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
+        assert_equal(0,0)    
+         

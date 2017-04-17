@@ -13,15 +13,11 @@ from activelearning.exampleselector.entropy_based_example_selector import Entrop
 class EntropySelectorTests(unittest.TestCase):
     def setUp(self):
 
-#         dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_A.csv')).head(1000)
-#         dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_B.csv')).head(1000)
-        # labeled data, typically small in number in DataFrame format
-        labeled_dataset_seed = pd.read_csv('/Users/lokananda/Documents/IndependentStudy/activelearning/activelearning/tests/Data/productsSeedMod.csv')
+
+        labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__) + "/Data/seed.csv"), sep='\t')
         
-        # merge the original unlabeled data with labeled Data
-        #self.unlabeled_dataset = self.getPartiallyLabelledDatset(dataset_a, dataset_b, labeled_dataset_seed)
-        
-        self.unlabeled_dataset = pd.read_csv("/Users/lokananda/Documents/IndependentStudy/activelearning/activelearning/tests/Data/sample_data.csv", sep='\t')
+
+        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__) + "/Data/sample_fvs.csv"), sep='\t')
         self.model = linear_model.LogisticRegression()
         
         feature_attrs = list(self.unlabeled_dataset.columns)
@@ -41,7 +37,7 @@ class EntropySelectorTests(unittest.TestCase):
                                      self.unlabeled_dataset.head(5), self.model, 
                                      ['_id', 'l_ID', 'r_ID'])
   
-        assert_equal(0,instance_to_be_labeled.iloc[0]["_id"])
+        assert_equal(1,instance_to_be_labeled.iloc[0]["_id"])
     
     
     #testing batch mode
@@ -50,9 +46,9 @@ class EntropySelectorTests(unittest.TestCase):
         
         instances_to_be_labeled = es.select_examples(
                                       self.unlabeled_dataset.head(5), self.model,
-                                      ['_id', 'l_ID', 'r_ID'])
+                                      ['_id', 'l_ID', 'r_ID'], 2)
 
-        assert_equal(0,instances_to_be_labeled.iloc[0]["_id"])
+        assert_equal(1,instances_to_be_labeled.iloc[0]["_id"])
         
     def getPartiallyLabeledDatset(self, ldf, rdf, labeled_dataset_seed):
         #for now read the feature vectors of sample pairs directly from file
