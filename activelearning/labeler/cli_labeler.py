@@ -1,6 +1,6 @@
 
 from labeler import Labeler
-
+from activelearning.utils.validation import validate_input_table
 class CliLabeler(Labeler):
     
     def __init__(self, get_instruction_fn, get_example_display_fn, labels):
@@ -19,6 +19,9 @@ class CliLabeler(Labeler):
         
     def label(self, examples_to_label, context, label_attr='label'):
         #Show the instruction to the user 
+        
+        # check if the input examples_to_label is a dataframe
+        validate_input_table(examples_to_label, 'unlabeled dataset')
         print(self.get_instruction_fn(context))
         user_labels = []
         for idx, example in examples_to_label.iterrows():
