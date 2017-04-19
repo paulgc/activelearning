@@ -12,6 +12,11 @@ from activelearning.exampleselector.entropy_based_example_selector import Entrop
 from activelearning.labeler.cli_labeler import CliLabeler
 from activelearning.activelearner.active_learner import ActiveLearner
 from activelearning.utils.validation import validate_attr
+
+
+def match(ltup, rtup):
+    return False
+
 class ActiveLearnerTests(unittest.TestCase):
     
     def sample_get_instruction_fn(self, context):
@@ -39,18 +44,28 @@ class ActiveLearnerTests(unittest.TestCase):
         H = em.extract_feature_vecs(dev_set, feature_table=match_f, attrs_before = ['_id', 'ltable_id', 'rtable_id'], attrs_after=i_attrs_after)
         return H
 
+
+    
+    def bb_block(self, sample_A, sample_B):
+        bb = em.BlackBoxBlocker()
+        bb.set_black_box_function(match)
+        bbC = bb.block_tables(sample_A, sample_B, l_output_attrs=['id', 'title', 'artist_name', 'year'], r_output_attrs=['id','title', 'year', 'episode','song', 'artists'], show_progress=True)
+        #bbC.to_csv('block_result.csv', index = False, encoding='utf-8')
+        return bbC
+
     def setUp(self):
-        sample_A = em.read_csv_metadata('Data/songs.csv', key='id')
-        sample_B = em.read_csv_metadata('Data/tracks.csv', key='id')
+        sample_A = em.read_csv_metadata('data/songs.csv', key='id')
+        sample_B = em.read_csv_metadata('data/tracks.csv', key='id')
+        
         #test_set = em.read_csv_metadata(argv[4], key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
     
-#         dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/songs.csv')).head(1000)
-#         dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/tracks.csv')).head(1000)
+#         dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/songs.csv')).head(1000)
+#         dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/tracks.csv')).head(1000)
         
         # labeled data,containing labeled raw examples
-        self.labeled_dataset_seed = em.read_csv_metadata(os.path.join(os.path.dirname(__file__), 'Data/I.csv'), key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
+        self.labeled_dataset_seed = em.read_csv_metadata(os.path.join(os.path.dirname(__file__), 'data/I.csv'), key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
 
-#       self.labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/I.csv'),  sep=',')
+#       self.labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/I.csv'),  sep=',')
     
         # get features for feature vectors
         match_f = self.get_feats(sample_A, sample_B)
@@ -60,12 +75,14 @@ class ActiveLearnerTests(unittest.TestCase):
 
         self.context = {"dataset_a": sample_A, "dataset_b": sample_B }
         
-        self.unlabeled_dataset = em.read_csv_metadata(os.path.join(os.path.dirname(__file__), 'Data/C.csv'), key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
-
+        self.unlabeled_dataset = em.read_csv_metadata(os.path.join(os.path.dirname(__file__), 'data/C.csv'), key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
+        print "blocking"
+        self.unlabeled_dataset = self.bb_block(sample_A, sample_B)
+        print "blocking end"
         self.unlabeled_dataset = self.train_fvs(self.unlabeled_dataset, match_f)
                 
         #create a model
-        self.model = RandomForestClassifier()   
+        self.model = RandomForestClassifier()
         #create a labeler
 
         self.labeler = CliLabeler(self.sample_get_instruction_fn, self.get_example_display_fn, {'y': 1, 'n': 0})
@@ -81,16 +98,16 @@ class ActiveLearnerTests(unittest.TestCase):
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
         assert_equal(0,0)
     
-    #testing batch mode
-    def test_active_learn_batch(self):
-        #create a learner
-        alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
-        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
-        assert_equal(0,0)    
-    
-    def test_active_learn_different_model(self):
-        #create a learner
-        alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
-        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
-        assert_equal(0,0)    
+#     #testing batch mode
+#     def test_active_learn_batch(self):
+#         #create a learner
+#         alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
+#         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
+#         assert_equal(0,0)    
+#     
+#     def test_active_learn_different_model(self):
+#         #create a learner
+#         alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
+#         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
+#         assert_equal(0,0)    
          

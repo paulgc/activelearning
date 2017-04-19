@@ -7,10 +7,10 @@ import numpy as np
 import operator
 import os
 
-from labeler.cli_labeler import CliLabeler
+from activelearning.labeler.cli_labeler import CliLabeler
 
 
-class EntropySamplerTests(unittest.TestCase):
+class CliLabelerTests(unittest.TestCase):
     def setUp(self):
         self.feature_vs = pd.read_csv("Data/sample_data.csv", sep='\t')
         self.table_A = pd.read_csv("Data/table_A.csv", sep=',')

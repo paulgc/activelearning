@@ -25,13 +25,13 @@ class ActiveLearnerTests(unittest.TestCase):
         return str(example_A) + "\n" + str(example_B)
 
     def setUp(self):
-        dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_A.csv')).head(1000)
-        dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/table_B.csv')).head(1000)
+        dataset_a=pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/table_A.csv')).head(1000)
+        dataset_b=pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/table_B.csv')).head(1000)
         self.context = {"dataset_a": dataset_a, "dataset_b": dataset_b }
-        # labeled data, typically small in number in DataFrame format
-        self.labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/seed.csv'),  sep='\t')
+        # labeled data, typically small in number in dataFrame format
+        self.labeled_dataset_seed = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/seed.csv'),  sep='\t')
     
-        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), 'Data/sample_fvs.csv'), sep='\t')
+        self.unlabeled_dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/sample_fvs.csv'), sep='\t')
         
         #create a model
         self.model = RandomForestClassifier()   
