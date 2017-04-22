@@ -42,6 +42,6 @@ class CliLabelerTests(unittest.TestCase):
         return str(raw_tuple_table_A[self.A_out_attrs]) + "\n" + str(raw_tuple_table_B[self.B_out_attrs]) + "\n" + self.prompt_msg
         
         
-    def test_label(self):
-        eml = CliLabeler(self.default_get_instruction_fn, self.display_tuple_pair_for_label, labels= {"y":0, "n":1}, label_attr='label')
-        eml.label(self.feature_vs)
+#     def test_label(self):
+#         eml = CliLabeler(self.default_get_instruction_fn, self.display_tuple_pair_for_label, labels= {"y":0, "n":1}, label_attr='label')
+#         eml.label(self.feature_vs)

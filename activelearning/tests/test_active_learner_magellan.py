@@ -1,6 +1,8 @@
 import unittest
 
 from nose.tools import *
+from mock import MagicMock
+
 import pandas as pd
 import numpy as np
 import operator
@@ -72,14 +74,12 @@ class ActiveLearnerTests(unittest.TestCase):
         
         #from labeled data, get labeled fvs
         self.labeled_dataset_seed = self.train_fvs(self.labeled_dataset_seed, match_f, i_attrs_after='gold_labels')
-
+        
         self.context = {"dataset_a": sample_A, "dataset_b": sample_B }
         
-        self.unlabeled_dataset = em.read_csv_metadata(os.path.join(os.path.dirname(__file__), 'data/C.csv'), key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
-        print "blocking"
-        self.unlabeled_dataset = self.bb_block(sample_A, sample_B)
-        print "blocking end"
-        self.unlabeled_dataset = self.train_fvs(self.unlabeled_dataset, match_f)
+        self.unlabeled_dataset = em.read_csv_metadata(os.path.join(os.path.dirname(__file__), 'data/unlabeled_dataset_fvs.csv'), key='_id',ltable=sample_A, rtable=sample_B, fk_ltable='ltable_id', fk_rtable='rtable_id')
+        
+#         self.unlabeled_dataset_seed = self.train_fvs(self.unlabeled_dataset_seed, match_f)
                 
         #create a model
         self.model = RandomForestClassifier()
@@ -91,19 +91,19 @@ class ActiveLearnerTests(unittest.TestCase):
         self.selector  = EntropyBasedExampleSelector()
         
 
-    #testing non batch mode
-    def test_active_learn_non_batch(self):
-        #create a learner
-        alearner = ActiveLearner(self.model, self.selector, self.labeler, 1, 2)
-        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
-        assert_equal(0,0)
+#     #testing non batch mode
+#     def test_active_learn_non_batch(self):
+#         #create a learner
+#         alearner = ActiveLearner(self.model, self.selector, self.labeler, 1, 10)
+#         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
+#         assert_equal(0,0)
     
 #     #testing batch mode
 #     def test_active_learn_batch(self):
 #         #create a learner
 #         alearner = ActiveLearner(self.model, self.selector, self.labeler, 2, 2)
 #         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'ltable_id', 'rtable_id'], context=self.context, label_attr='gold_labels')
-#         assert_equal(0,0)    
+#         assert_equal(0,0)
 #     
 #     def test_active_learn_different_model(self):
 #         #create a learner

@@ -37,7 +37,7 @@ before_install:
 #  - conda update --yes conda
 
 install:
-  - conda install --yes python=$PYTHON_VERSION pandas scikit-learn six nose
+  - conda install --yes python=$PYTHON_VERSION pandas scikit-learn six nose mock
   - pip install coveralls
   - python --version
 
