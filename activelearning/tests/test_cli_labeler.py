@@ -12,9 +12,9 @@ from activelearning.labeler.cli_labeler import CliLabeler
 
 class CliLabelerTests(unittest.TestCase):
     def setUp(self):
-        self.feature_vs = pd.read_csv("Data/sample_fvs.csv", sep='\t')
-        self.table_A = pd.read_csv("Data/table_A.csv", sep=',')
-        self.table_B = pd.read_csv("Data/table_B.csv", sep=',')
+
+        self.table_A = pd.read_csv(os.path.join(os.path.dirname(__file__) + "/data/table_A.csv", sep=','))
+        self.table_B = pd.read_csv(os.path.join(os.path.dirname(__file__) + "/data/table_B.csv", sep=','))
         
         self.fvs_A_id_attr = 'l_ID'
         self.fvs_B_id_attr = 'r_ID'
@@ -44,7 +44,7 @@ class CliLabelerTests(unittest.TestCase):
     @raises(TypeError)
     def test_cli_labeler_invalid_unlabeled_dataset(self):
         labeler = CliLabeler()
-        context = {}
+        context = {"display_fn": self.display_tuple_pair_for_label, "display_instruction_fn":self.default_get_instruction_fn}
         label_attr = 'label'
         labeler.label([], context, label_attr)
 
