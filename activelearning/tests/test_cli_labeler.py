@@ -12,7 +12,7 @@ from activelearning.labeler.cli_labeler import CliLabeler
 
 class CliLabelerTests(unittest.TestCase):
     def setUp(self):
-        self.feature_vs = pd.read_csv("Data/sample_data.csv", sep='\t')
+        self.feature_vs = pd.read_csv("Data/sample_fvs.csv", sep='\t')
         self.table_A = pd.read_csv("Data/table_A.csv", sep=',')
         self.table_B = pd.read_csv("Data/table_B.csv", sep=',')
         
@@ -23,7 +23,7 @@ class CliLabelerTests(unittest.TestCase):
         
         self.A_out_attrs = ['A.ID', 'birth_year','hourly_wage']
         self.B_out_attrs = ['B.ID', 'birth_year','hourly_wage']
-        self.prompt_msg = "Enter your choice:"
+
 
     def default_get_instruction_fn(self):
         banner_str = "Select whether the given below pair is a Match(y) or Non Match(n)" + "\n"
@@ -41,7 +41,13 @@ class CliLabelerTests(unittest.TestCase):
         #'A.ID', 'B.ID', 'l_ID', 'r_ID', ['birth_year','hourly_wage'], ['birth_year','hourly_wage']
         return str(raw_tuple_table_A[self.A_out_attrs]) + "\n" + str(raw_tuple_table_B[self.B_out_attrs]) + "\n" + self.prompt_msg
         
-        
+    @raises(TypeError)
+    def test_cli_labeler_invalid_unlabeled_dataset(self):
+        labeler = CliLabeler()
+        context = {}
+        label_attr = 'label'
+        labeler.label([], context, label_attr)
+
 #     def test_label(self):
 #         eml = CliLabeler(self.default_get_instruction_fn, self.display_tuple_pair_for_label, labels= {"y":0, "n":1}, label_attr='label')
 #         eml.label(self.feature_vs)

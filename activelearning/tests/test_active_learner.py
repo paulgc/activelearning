@@ -93,7 +93,37 @@ class ActiveLearnerTests(unittest.TestCase):
         assert_equal(0,0)    
 #     
 #     #test that in batch mode the loop exits prematurely with suitable error if the number of examples to select is exhausted
-#      
+#    
+    def test_batch_active_learn_error(self):
+        """Testing with a different model"""
+        #create a model
+        model = SVC(probability=True)
+        #create a labeler
+        self.labeler = CliLabeler(self.sample_get_instruction_fn, self.get_example_display_fn, {'y': 1, 'n': 0})
+        label_attr = 'label'
+        
+        #mock user labels
+        user_labels = [[0,0,0,1],[1,0,0,0], [1,0]]
+        
+        #create mock labeled data
+        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0,1,2,3]]
+        gold_labeled_data1[label_attr] = user_labels[0]
+        gold_labeled_data2 = self.unlabeled_dataset.iloc[[4,5,6,7]]
+        gold_labeled_data2[label_attr] = user_labels[1]
+        gold_labeled_data3 = self.unlabeled_dataset.iloc[[8,9]]
+        gold_labeled_data3[label_attr] = user_labels[2]
+        
+        #Mock the labeler to return gold data
+        self.labeler.label = MagicMock()
+        self.labeler.label.side_effect = [gold_labeled_data1, gold_labeled_data2, gold_labeled_data3]
+        
+        #create a selector
+        self.selector  = EntropyBasedExampleSelector()
+        #create a learner
+        alearner = ActiveLearner(model, self.selector, self.labeler, 4, 3)
+        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
+        assert_equal(0,0) 
+          
     def test_active_learn_different_model(self):
         """Testing with a different model"""
         #create a model
