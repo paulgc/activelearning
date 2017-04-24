@@ -41,12 +41,17 @@ class EntropySelectorTests(unittest.TestCase):
                                       ['_id', 'l_ID', 'r_ID'], 2)
 
         assert_equal(1,instances_to_be_labeled.iloc[0]["_id"])
+        assert_equal(4,instances_to_be_labeled.iloc[1]["_id"])
         
     @raises(TypeError)
     def test_entropy_selector_invalid_unlabeled_dataset(self):
         es = EntropyBasedExampleSelector()
         es.select_examples([], self.model,
                                       ['_id', 'l_ID', 'r_ID'], 2)
-
+    @raises(AssertionError)
+    def test_entropy_selector_invalid_exclude_attr(self):
+        es = EntropyBasedExampleSelector()
+        es.select_examples(self.unlabeled_dataset.head(5), self.model,
+                                      ['_id', 'l_ID', 'A_ID'], 2)
 if __name__ == '__main__':
     unittest.main()
