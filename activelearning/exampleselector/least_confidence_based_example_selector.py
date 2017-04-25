@@ -5,10 +5,10 @@ from activelearning.exampleselector.uncertainity_based_example_selector import U
 from activelearning.utils.validation import validate_input_table
 from activelearning.utils.validation import validate_attr
 
-class LeastConfidenceMeasureExampleSelector(UncertainityBasedExampleSelector):
+class LeastConfidenceExampleSelector(UncertainityBasedExampleSelector):
     
-    def __init__(self, model, batch_mode, batch_size=5):
-        super(LeastConfidenceMeasureExampleSelector, self).__init__(model)
+    def __init__(self):
+        super(LeastConfidenceExampleSelector, self).__init__()
 
     
     def _compute_margin(self, probability):
