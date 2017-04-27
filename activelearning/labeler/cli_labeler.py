@@ -31,7 +31,7 @@ class CliLabeler(Labeler):
                 user_labels.append(self.labels[label_str])
             else:
                 #Display error message if user enters a wrong label
-                print "Incorrect Label. Pls try again"
+                print("Incorrect Label. Pls try again")
                 self.label(examples_to_label, context, label_attr='label')
             
 

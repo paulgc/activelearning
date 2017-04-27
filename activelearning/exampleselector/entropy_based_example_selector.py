@@ -12,6 +12,7 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     def __init__(self):
         super(EntropyBasedExampleSelector, self).__init__()
     
+    
     def _compute_entropy(self, probability):
         if 0 in probability:
             return 0
@@ -20,7 +21,10 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
     def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, 
                         batch_size=1):
+        """
+        TODO Write Doc string
         
+        """
         # check if the input candset is a dataframe
         validate_input_table(unlabeled_dataset, 'unlabeled dataset')
         
@@ -35,14 +39,11 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
                 feature_attrs.remove(attr)
 
         feature_values = unlabeled_dataset[feature_attrs]
-        feature_values.fillna(value=0, inplace=True)
+
         # compute the prediction probabilities for the unlabeled dataset
         #start_time_predict_model = time.time()
-        try:
-            probabilities = model.predict_proba(feature_values) 
-        except Exception as e:
-            print e
-            print feature_attrs
+        probabilities = model.predict_proba(feature_values) 
+
         #end_time_predict_model = time.time()
         #time_taken_predict_model = end_time_predict_model - start_time_predict_model
 #             for v in unlabeled_dataset[feature_attrs].values: print v
@@ -54,7 +55,7 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
 #         for i in xrange(len(probabilities)):
 #             #print str(i) + " " + str(probabilities[i]) + "=>" + str(self._compute_entropy(probabilities[i]))
 #             entropies[i] = self._compute_entropy(probabilities[i])
-#         
+
         entropies = pd.np.sum(-probabilities * pd.np.log(probabilities), axis=1)
         
         #end_time_entropy_calc = time.time()
