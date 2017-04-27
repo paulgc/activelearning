@@ -1,14 +1,14 @@
-from activelearning.utils.validation import validate_input_table
-from activelearning.utils.validation import validate_attr
-from activelearning.utils.common_ddl import remove_exclude_attr
+from activelearn.utils.validation import validate_input_table
+from activelearn.utils.validation import validate_attr
+from activelearn.utils.helper_functions import remove_exclude_attr
 
-from activelearning.labeler.labeler import Labeler
-from activelearning.exampleselector.example_selector import ExampleSelector
+from activelearn.labeler.labeler import Labeler
+from activelearn.exampleselector.example_selector import ExampleSelector
 
 import time
 class ActiveLearner(object):
     """
-
+    
     Args:
         model (Model): 
         example_selector (int): 

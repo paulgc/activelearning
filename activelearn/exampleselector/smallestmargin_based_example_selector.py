@@ -2,7 +2,7 @@
 import operator
 import numpy as np
 
-from activelearning.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
+from activelearn.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
 
 class SmallestMarginBasedExampleSelector(UncertainityBasedExampleSelector):
     

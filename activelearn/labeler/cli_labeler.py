@@ -1,5 +1,5 @@
-from activelearning.labeler.labeler import Labeler
-from activelearning.utils.validation import validate_input_table
+from activelearn.labeler.labeler import Labeler
+from activelearn.utils.validation import validate_input_table
 
 class CliLabeler(Labeler):
     

@@ -1,6 +1,6 @@
 """utilities"""
 
-from activelearning.utils.validation import validate_attr
+from activelearn.utils.validation import validate_attr
 
 def remove_exclude_attr(feature_attrs, exclude_attrs, dataset):
     for attr in exclude_attrs:
