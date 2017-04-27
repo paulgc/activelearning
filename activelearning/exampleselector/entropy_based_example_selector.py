@@ -6,6 +6,7 @@ from activelearning.exampleselector.uncertainity_based_example_selector import U
 
 from activelearning.utils.validation import validate_input_table
 from activelearning.utils.validation import validate_attr
+from activelearning.utils.common_ddl import remove_exclude_attr
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
@@ -33,10 +34,7 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
             validate_attr(attr, unlabeled_dataset.columns, "attr", 'unlabeled_dataset')
         
         # remove exclude attrs
-        feature_attrs = list(unlabeled_dataset.columns)
-        if exclude_attrs:
-            for attr in exclude_attrs:
-                feature_attrs.remove(attr)
+        feature_attrs = remove_exclude_attr(list(unlabeled_dataset.columns), exclude_attrs, unlabeled_dataset)
 
         feature_values = unlabeled_dataset[feature_attrs]
 
@@ -55,6 +53,9 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
 #         for i in xrange(len(probabilities)):
 #             #print str(i) + " " + str(probabilities[i]) + "=>" + str(self._compute_entropy(probabilities[i]))
 #             entropies[i] = self._compute_entropy(probabilities[i])
+#         calc_entropies = pd.np.vectorize(self._compute_entropy)
+#         
+#         test_entropies = calc_entropies(map(lambda p: (p[0], p[1]),probabilities))
 
         entropies = pd.np.sum(-probabilities * pd.np.log(probabilities), axis=1)
         

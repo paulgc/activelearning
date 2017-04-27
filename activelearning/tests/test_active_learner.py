@@ -89,7 +89,9 @@ class ActiveLearnerTests(unittest.TestCase):
         self.selector  = EntropyBasedExampleSelector()
         #create a learner
         alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
+        #
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
+
         assert_equal(0,0)    
 #     
 #     #test that in batch mode the loop exits prematurely with suitable error if the number of examples to select is exhausted
@@ -152,4 +154,22 @@ class ActiveLearnerTests(unittest.TestCase):
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
         assert_equal(0,0)    
     
+    #Testing with wrong labeler
+    @raises(TypeError)
+    def test_active_learn_with_wrong_labeler(self):
+        
+        #create a model
+        model = SVC(probability=True)
+        #create a labeler
+        self.labeler = {}
+        
+        label_attr = 'label'
+        
+        #create a selector
+        self.selector  = EntropyBasedExampleSelector()
+        #create a learner
+        alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
+        
+        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
+        assert_equal(0,0) 
     
