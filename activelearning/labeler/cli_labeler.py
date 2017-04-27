@@ -1,6 +1,6 @@
-
-from labeler import Labeler
+from activelearning.labeler.labeler import Labeler
 from activelearning.utils.validation import validate_input_table
+
 class CliLabeler(Labeler):
     
     def __init__(self, get_instruction_fn, get_example_display_fn, labels):
