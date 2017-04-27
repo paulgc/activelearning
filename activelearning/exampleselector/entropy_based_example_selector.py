@@ -23,8 +23,22 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, 
                         batch_size=1):
         """
-        TODO Write Doc string
-        
+        Used to select examples.
+
+        Args:
+            model (Model): An attribute to store the tokenizer.
+            unlabeled_dataset (int): An attribute to store the overlap threshold value.
+            exclude_attr (string): An attribute to store the comparison operator.
+            batch_size (boolean): An attribute to store the value of the flag 
+                allow_missing.
+    
+        Attributes:
+            model (Model): An attribute to store the tokenizer.
+            example_selector (int): An attribute to store the overlap threshold value.
+            labeler (string): An attribute to store the comparison operator.
+            batch_size (boolean): An attribute to store the value of the flag 
+                allow_missing.
+            
         """
         # check if the input candset is a dataframe
         validate_input_table(unlabeled_dataset, 'unlabeled dataset')

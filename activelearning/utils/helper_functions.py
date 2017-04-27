@@ -1,4 +1,4 @@
-"""ddl utilities"""
+"""utilities"""
 
 from activelearning.utils.validation import validate_attr
 
