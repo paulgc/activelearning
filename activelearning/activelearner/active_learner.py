@@ -7,23 +7,22 @@ from activelearning.exampleselector.example_selector import ExampleSelector
 
 import time
 class ActiveLearner(object):
-    """Performs the Active Learning Loop.
+    """
 
     Args:
-        model (Model): An attribute to store the tokenizer.
-        example_selector (int): An attribute to store the overlap threshold value.
-        labeler (string): An attribute to store the comparison operator.
-        batch_size (number): An attribute to store the value of the flag 
-            allow_missing.
-        num_iters: number of iterations to run the active learner
+        model (Model): 
+        example_selector (int): 
+        labeler (string): 
+        batch_size (number): 
+        num_iters: Number of iterations to run the active learner
 
     Attributes:
-        model (Model): An attribute to store the tokenizer.
-        example_selector (int): An attribute to store the overlap threshold value.
-        labeler (string): An attribute to store the comparison operator.
-        batch_size (boolean): An attribute to store the value of the flag 
-            allow_missing.
+        model (Model): 
+        example_selector (int): 
+        labeler (string): 
+        batch_size (boolean): Number of iterations to run the active learner
     """
+
     def __init__(self, model, example_selector, labeler, batch_size, num_iters):
         self.model = model
         self.example_selector = example_selector
@@ -34,6 +33,16 @@ class ActiveLearner(object):
         
     def learn(self, unlabeled_dataset, seed, exclude_attrs=None, context=None, 
               label_attr='label'):
+        """
+        Performs the Active Learning Loop.
+        
+        Args:
+            unlabeled_dataset (DataFrame): unlabeled_dataset
+            seed (DataFrame): labeled examples
+            
+        Returns:
+           A learned model  
+        """
         
         #validate input tables
         validate_input_table(unlabeled_dataset, 'unlabeled dataset')

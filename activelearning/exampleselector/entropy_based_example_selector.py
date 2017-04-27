@@ -6,7 +6,7 @@ from activelearning.exampleselector.uncertainity_based_example_selector import U
 
 from activelearning.utils.validation import validate_input_table
 from activelearning.utils.validation import validate_attr
-from activelearning.utils.common_ddl import remove_exclude_attr
+from activelearning.utils.helper_functions import remove_exclude_attr
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
