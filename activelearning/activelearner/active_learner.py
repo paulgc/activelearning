@@ -7,7 +7,23 @@ from activelearning.exampleselector.example_selector import ExampleSelector
 
 import time
 class ActiveLearner(object):
+    """Performs the Active Learning Loop.
 
+    Args:
+        model (Model): An attribute to store the tokenizer.
+        example_selector (int): An attribute to store the overlap threshold value.
+        labeler (string): An attribute to store the comparison operator.
+        batch_size (number): An attribute to store the value of the flag 
+            allow_missing.
+        num_iters: number of iterations to run the active learner
+
+    Attributes:
+        model (Model): An attribute to store the tokenizer.
+        example_selector (int): An attribute to store the overlap threshold value.
+        labeler (string): An attribute to store the comparison operator.
+        batch_size (boolean): An attribute to store the value of the flag 
+            allow_missing.
+    """
     def __init__(self, model, example_selector, labeler, batch_size, num_iters):
         self.model = model
         self.example_selector = example_selector
@@ -27,7 +43,7 @@ class ActiveLearner(object):
         if not isinstance(self.labeler, Labeler):
             raise TypeError(self.labeler + ' is not an object of labeler class')
         #validate example selector
-        if not isinstance(self.example_selector, ):
+        if not isinstance(self.example_selector, ExampleSelector):
             raise TypeError(self.example_selector + ' is not an object of example selector ')
         
         feature_attrs = list(unlabeled_dataset.columns)  
