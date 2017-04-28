@@ -17,7 +17,23 @@ class LeastConfidenceExampleSelector(UncertainityBasedExampleSelector):
     
     
     def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, batch_size=1):
-            
+            """
+            Used to select informative examples based on the confidence of the examples.
+    
+            Args:
+                model (Model): Model that is used to compute the uncertainty measure of the example
+                unlabeled_dataset (int): 
+                exclude_attr (string): 
+                batch_size (boolean): 
+        
+            Attributes:
+                model (Model): 
+                example_selector (int): An attribute to store the overlap threshold value.
+                labeler (string): An attribute to store the comparison operator.
+                batch_size (boolean): An attribute to store the value of the flag 
+                    allow_missing.
+                
+            """
             validate_input_table(unlabeled_dataset, 'unlabeled dataset')
             #validate exclude attr
             for attr in exclude_attrs:

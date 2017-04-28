@@ -62,8 +62,15 @@ class ActiveLearnerTests(unittest.TestCase):
         self.selector  = EntropyBasedExampleSelector()
         #create a learner
         alearner = ActiveLearner(model, self.selector, self.labeler, 1, 2)
+        
+        #length of unlabeled dataset
+        len_unlabeled_data_before_learning = len(self.unlabeled_dataset)
+        
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
-        assert_equal(0,0)
+        
+        len_after_unlabeled_data_after_learning = len(self.unlabeled_dataset)
+        #after two iterations we expect the length of unlabeled datset to have reduced by two
+        assert_equal(2,len_after_unlabeled_data_after_learning - len_unlabeled_data_before_learning)
     
     def test_active_learn_batch(self):
         """testing batch mode active learn loop for 2 iterations"""
