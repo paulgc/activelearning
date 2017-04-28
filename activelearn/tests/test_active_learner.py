@@ -68,9 +68,9 @@ class ActiveLearnerTests(unittest.TestCase):
         
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
         
-        len_after_unlabeled_data_after_learning = len(self.unlabeled_dataset)
+        len_unlabeled_data_after_learning = len(self.unlabeled_dataset)
         #after two iterations we expect the length of unlabeled datset to have reduced by two
-        assert_equal(2,len_unlabeled_data_before_learning - len_after_unlabeled_data_after_learning)
+        assert_equal(2,len_unlabeled_data_before_learning - len_unlabeled_data_after_learning)
     
     def test_active_learn_batch(self):
         """testing batch mode active learn loop for 2 iterations"""
@@ -97,10 +97,17 @@ class ActiveLearnerTests(unittest.TestCase):
         self.selector  = EntropyBasedExampleSelector()
         #create a learner
         alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
-        #
+        
+        #length of unlabeled dataset
+        len_unlabeled_data_before_learning = len(self.unlabeled_dataset)
+        
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
 
-        assert_equal(0,0)    
+        #length of unlabeled dataset
+        len_unlabeled_data_after_learning = len(self.unlabeled_dataset)
+        
+        #after two iterations we expect the length of unlabeled datset to have reduced by two
+        assert_equal(4,len_unlabeled_data_before_learning - len_unlabeled_data_after_learning)  
 #     
 #     #test that in batch mode the loop exits prematurely with suitable error if the number of examples to select is exhausted
 #    
@@ -129,10 +136,18 @@ class ActiveLearnerTests(unittest.TestCase):
         
         #create a selector
         self.selector  = EntropyBasedExampleSelector()
+        
+        #length of unlabeled dataset
+        len_unlabeled_data_before_learning = len(self.unlabeled_dataset)
+        
         #create a learner
         alearner = ActiveLearner(model, self.selector, self.labeler, 4, 3)
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
-        assert_equal(0,0) 
+        
+        #length of unlabeled dataset
+        len_unlabeled_data_after_learning = len(self.unlabeled_dataset)
+        
+        assert_equal(10,len_unlabeled_data_before_learning - len_unlabeled_data_after_learning) 
           
     def test_active_learn_different_model(self):
         """Testing with a different model"""
@@ -160,7 +175,7 @@ class ActiveLearnerTests(unittest.TestCase):
         #create a learner
         alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
-        assert_equal(0,0)    
+    
     
     #Testing with wrong labeler
     @raises(TypeError)
@@ -179,9 +194,9 @@ class ActiveLearnerTests(unittest.TestCase):
         alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
         
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
-        assert_equal(0,0) 
+ 
     
-    #Testing with wrong labeler
+    #Testing with wrong selector
     @raises(TypeError)
     def test_active_learn_with_wrong_example_selector(self):
         

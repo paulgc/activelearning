@@ -90,7 +90,7 @@ class ActiveLearner(object):
                                                   label_attr)
             
             # drop the labeled examples from the pool of unlabled examples
-            unlabeled_dataset = unlabeled_dataset.drop(labeled_examples.index) 
+            unlabeled_dataset.drop(labeled_examples.index, inplace=True) 
             
             # update the labeled dataset
             labeled_dataset = labeled_dataset.append(labeled_examples) 
