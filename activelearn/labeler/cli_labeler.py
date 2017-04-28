@@ -6,8 +6,25 @@ class CliLabeler(Labeler):
     A command line labeler for labeling raw instances
     
     Args:
-        get_instruction_fn (Function): User provided function which specifies the instruction is to be displayed to the user
-        get_example_display_fn (Function): User provided function which specifies how to fetch the raw examples to be labeled 
+        get_instruction_fn (Function): 	User provided function which specifies 
+				       	the instruction is to be displayed to
+				       	the user before a particular example's
+				        label is queried from the user.
+
+        get_example_display_fn (Function): User provided function which 
+					specifies how to fetch the raw 
+					examples to be labeled.
+					This function will take 2 arguments
+					namely a feature vector and a context 
+					object. The context is an object
+					provided by the user that contains
+					the necessary data to obtain the 
+					raw representation of the feature
+					vector to be labeled. This function
+					will provide the neccessary logic
+					to obtain the raw representation of
+					the examples to be labeled using the
+					provided context.
     Attributes:
         get_instruction_fn (Function)
         get_example_display_fn (Function)
@@ -27,7 +44,9 @@ class CliLabeler(Labeler):
             return False
         
     def label(self, examples_to_label, context, label_attr='label'):
+        """
         
+        """
         # check if the input examples_to_label is a dataframe
         validate_input_table(examples_to_label, 'unlabeled dataset')
         
