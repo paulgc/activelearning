@@ -12,10 +12,6 @@ class LeastConfidenceExampleSelector(UncertaintyBasedExampleSelector):
         super(LeastConfidenceExampleSelector, self).__init__()
 
     
-    def _compute_margin(self, probability):
-        return (probability[0] - probability[1])
-    
-    
     def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, batch_size=1):
             """
             Used to select informative examples based on the confidence of the examples.
