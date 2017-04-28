@@ -41,7 +41,7 @@ class ActiveLearner(object):
 	    the labels of the instances
         
         Args:
-        unlabeled_dataset (DataFrame): A Datframe containing unlabeled
+        unlabeled_dataset (DataFrame): A Dataframe containing unlabeled
 					   examples
             
 	    seed (DataFrame): A Dataframe containing initial labeled examples
@@ -50,8 +50,8 @@ class ActiveLearner(object):
 	    exclude_attrs (list): A list of attributes to be excluded while
 				  fitting the model (Defaults to None)
 	    
-	    context (map): A dictionary containing all the necessary
-	    context for the labeling function
+	    context (dictionary): A dictionary containing all the necessary
+	                context for the labeling function
 			
 	  
         Returns:
