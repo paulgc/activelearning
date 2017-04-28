@@ -22,13 +22,7 @@ class LeastConfidenceExampleSelector(UncertainityBasedExampleSelector):
             #validate exclude attr
             for attr in exclude_attrs:
                 validate_attr(attr, unlabeled_dataset.columns, "attr", 'unlabeled_dataset')
-            
-            # remove exclude attrs
-#             feature_attrs = list(unlabeled_dataset.columns)
-#             if exclude_attrs:
-#                 for attr in exclude_attrs:
-#                     feature_attrs.remove(attr)
-            
+                 
             feature_attrs = remove_exclude_attr(list(unlabeled_dataset.columns), exclude_attrs, unlabeled_dataset)
 
             feature_values = unlabeled_dataset[feature_attrs]

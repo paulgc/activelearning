@@ -8,17 +8,18 @@ from activelearn.exampleselector.example_selector import ExampleSelector
 import time
 class ActiveLearner(object):
     """
+    A class which allows to learn a given model by actively querying the labels of unlabeled instances
     
     Args:
-        model (Model): 
-        example_selector (int): 
-        labeler (string): 
+        model (Model): Model to learn
+        example_selector (ExampleSelector): 
+        labeler (Labeler): 
         batch_size (number): 
         num_iters: Number of iterations to run the active learner
 
     Attributes:
         model (Model): 
-        example_selector (int): 
+        example_selector (ExampleSelector): 
         labeler (string): 
         batch_size (boolean): Number of iterations to run the active learner
     """
@@ -34,7 +35,7 @@ class ActiveLearner(object):
     def learn(self, unlabeled_dataset, seed, exclude_attrs=None, context=None, 
               label_attr='label'):
         """
-        Performs the Active Learning Loop.
+        Performs the Active Learning Loop to help learn the model by querying the labels of the instances
         
         Args:
             unlabeled_dataset (DataFrame): unlabeled_dataset

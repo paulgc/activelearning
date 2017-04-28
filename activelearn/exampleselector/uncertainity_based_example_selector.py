@@ -3,7 +3,7 @@ from activelearn.exampleselector.example_selector import ExampleSelector
 
 class UncertainityBasedExampleSelector(ExampleSelector):
     """
-    should support querying batch samples
+    Base class for all uncertainty based example selectors
     """
     def __init__(self):
         super(UncertainityBasedExampleSelector, self).__init__()
