@@ -9,7 +9,9 @@ from activelearn.utils.validation import validate_attr
 from activelearn.utils.helper_functions import remove_exclude_attr
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
-    
+    """
+    Entropy based Uncertainty example selection
+    """
     def __init__(self):
         super(EntropyBasedExampleSelector, self).__init__()
     
