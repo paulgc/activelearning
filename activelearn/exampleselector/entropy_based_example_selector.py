@@ -1,7 +1,7 @@
 
 import operator
 import pandas as pd
-import time
+
 from activelearn.exampleselector.uncertainty_based_example_selector import UncertaintyBasedExampleSelector
 
 from activelearn.utils.validation import validate_input_table
