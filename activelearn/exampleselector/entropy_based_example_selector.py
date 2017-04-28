@@ -52,40 +52,14 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
         feature_values = unlabeled_dataset[feature_attrs]
 
         # compute the prediction probabilities for the unlabeled dataset
-        #start_time_predict_model = time.time()
         probabilities = model.predict_proba(feature_values) 
 
-        #end_time_predict_model = time.time()
-        #time_taken_predict_model = end_time_predict_model - start_time_predict_model
-#             for v in unlabeled_dataset[feature_attrs].values: print v
-#             print e
         # compute the entropy for the unlabeled pairs
-        #entropies = {}
-        
-        #start_time_entropy_calc = time.time()
-#         for i in xrange(len(probabilities)):
-#             #print str(i) + " " + str(probabilities[i]) + "=>" + str(self._compute_entropy(probabilities[i]))
-#             entropies[i] = self._compute_entropy(probabilities[i])
-#         calc_entropies = pd.np.vectorize(self._compute_entropy)
-#         
-#         test_entropies = calc_entropies(map(lambda p: (p[0], p[1]),probabilities))
-
         entropies = pd.np.sum(-probabilities * pd.np.log(probabilities), axis=1)
-        
-        #end_time_entropy_calc = time.time()
-        #time_taken_entropy_calc = end_time_entropy_calc - start_time_entropy_calc
         
         entropies = dict(enumerate(entropies))
         
-        
-        #start_time_entropy_sort = time.time()
         candidate_examples = sorted(entropies.items(), key=operator.itemgetter(1), reverse=True)[:min(batch_size, len(entropies))]
-        #end_time_entropy_sort = time.time()
-        #time_taken_entropy_sort = end_time_entropy_sort - start_time_entropy_sort
-        
-#         print "Time taken for calc prob"
-#         print " time_taken_predict_model:" + str(time_taken_predict_model)
-#         print " time_taken_entropy_calc:" + str(time_taken_entropy_calc)
-#         print " time_taken_entropy_sort:" + str(time_taken_entropy_sort)
+
         next_batch_idxs = map(lambda val: val[0], candidate_examples)
         return unlabeled_dataset.iloc[next_batch_idxs]
