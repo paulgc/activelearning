@@ -23,10 +23,10 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     def select_examples(self, unlabeled_dataset, model, exclude_attrs=None, 
                         batch_size=1):
         """
-        Used to select examples.
+        Used to select informative examples based on the entropy of the examples.
 
         Args:
-            model (Model): 
+            model (Model): Model that is used to compute the uncertainty measure of the example
             unlabeled_dataset (int): 
             exclude_attr (string): 
             batch_size (boolean): 
