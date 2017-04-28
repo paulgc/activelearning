@@ -7,7 +7,7 @@ import numpy as np
 import operator
 import os
 
-from activelearning.labeler.cli_labeler import CliLabeler
+from activelearn.labeler.cli_labeler import CliLabeler
 
 
 class CliLabelerTests(unittest.TestCase):
