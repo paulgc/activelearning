@@ -174,3 +174,21 @@ class ActiveLearnerTests(unittest.TestCase):
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
         assert_equal(0,0) 
     
+    #Testing with wrong labeler
+    @raises(TypeError)
+    def test_active_learn_with_wrong_example_selector(self):
+        
+        #create a model
+        model = SVC(probability=True)
+        #create a labeler
+        self.selector = {}
+        
+        label_attr = 'label'
+        
+        #create a selector
+        self.selector  = EntropyBasedExampleSelector()
+        #create a learner
+        alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
+        
+        alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
+        assert_equal(0,0)

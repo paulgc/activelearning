@@ -30,7 +30,6 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
             unlabeled_dataset (int): 
             exclude_attr (string): 
             batch_size (boolean): 
-                allow_missing.
     
         Attributes:
             model (Model): 

@@ -4,7 +4,6 @@ import numpy as np
 from activelearn.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
 from activelearn.utils.validation import validate_input_table
 from activelearn.utils.validation import validate_attr
-
 from activelearn.utils.helper_functions import remove_exclude_attr
 
 class LeastConfidenceExampleSelector(UncertainityBasedExampleSelector):
