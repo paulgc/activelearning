@@ -11,20 +11,19 @@ class ActiveLearner(object):
     of unlabeled instances using Pool-based active learning.
     
     Args:
-        model (Model): Model to learn
+        model (Model): Scikit-Learn Model to learn
         example_selector (ExampleSelector): example selector to query 
 					    informative examples
-        labeler (Labeler): A labeler which fetches labels from the oracle
+        labeler (Labeler): A labeler which fetches labels from the oracle/human
         batch_size (number): The number of examples to be labeled per iteration
         num_iters (number): Number of iterations to run the active learner
 
     Attributes:
-        model (Model): Model to learn
-        example_selector (ExampleSelector): example selector to query 
-					    informative examples
-        labeler (Labeler): A labeler which fetches labels from the oracle
-        batch_size (number): The number of examples to be labeled per iteration
-        num_iters (number): Number of iterations to run the active learner
+        model (Model): An attribute to store the Scikit-Learn Model
+        example_selector (ExampleSelector): An attribute to store the example selector.
+        labeler (Labeler): An attribute to store the labeler passed in arguments
+        batch_size (number): An attribute to store the batch_size
+        num_iters (number): An attribute to store the number of iterations
     """
 
     def __init__(self, model, example_selector, labeler, batch_size, num_iters):
@@ -51,9 +50,9 @@ class ActiveLearner(object):
 	    exclude_attrs (list): A list of attributes to be excluded while
 				  fitting the model (Defaults to None)
 	    
-	    context (map): An user defined map containing all the neccessary 
-			object that is used by the user to query the raw 
-			representation of examples.
+	    context (map): A dictionary containing all the necessary
+	    context for the labeling function
+			
 	  
         Returns:
            A learned model  

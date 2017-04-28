@@ -29,17 +29,11 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
 
         Args:
             model (Model): Model that is used to compute the uncertainty measure of the example
-            unlabeled_dataset (int): 
-            exclude_attr (string): 
-            batch_size (boolean): 
-    
-        Attributes:
-            model (Model): 
-            example_selector (int): An attribute to store the overlap threshold value.
-            labeler (string): An attribute to store the comparison operator.
-            batch_size (boolean): An attribute to store the value of the flag 
-                allow_missing.
-            
+            unlabeled_dataset (Pandas DataFrame): A Dataframe containing unlabeled examples
+            exclude_attrs (list): Attributes which are not feature attributes.
+            batch_size (number): The number of examples to select
+        Returns:
+            The informative examples
         """
         # check if the input candset is a dataframe
         validate_input_table(unlabeled_dataset, 'unlabeled dataset')
@@ -56,10 +50,10 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
         # compute the prediction probabilities for the unlabeled dataset
         probabilities = model.predict_proba(feature_values) 
 
+        entropies = {} 
         # compute the entropy for the unlabeled pairs
-        entropies = pd.np.sum(-probabilities * pd.np.log(probabilities), axis=1)
-        
-        entropies = dict(enumerate(entropies))
+        for i in xrange(len(probabilities)):
+            entropies[i] = self._compute_entropy(probabilities[i])
         
         candidate_examples = sorted(entropies.items(), key=operator.itemgetter(1), reverse=True)[:min(batch_size, len(entropies))]
 

@@ -22,17 +22,12 @@ class LeastConfidenceExampleSelector(UncertainityBasedExampleSelector):
     
             Args:
                 model (Model): Model that is used to compute the uncertainty measure of the example
-                unlabeled_dataset (int): 
-                exclude_attr (string): 
-                batch_size (boolean): 
+                unlabeled_dataset (Pandas DataFrame): A Dataframe containing unlabeled examples
+                exclude_attr (list): Attributes which are not feature attributes.
+                batch_size (number): The number of examples to select
         
-            Attributes:
-                model (Model): 
-                example_selector (int): An attribute to store the overlap threshold value.
-                labeler (string): An attribute to store the comparison operator.
-                batch_size (boolean): An attribute to store the value of the flag 
-                    allow_missing.
-                
+            Returns:
+                The informative examples
             """
             validate_input_table(unlabeled_dataset, 'unlabeled dataset')
             #validate exclude attr
