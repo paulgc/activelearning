@@ -7,6 +7,7 @@ from activelearn.exampleselector.uncertainty_based_example_selector import Uncer
 from activelearn.utils.validation import validate_input_table
 from activelearn.utils.validation import validate_attr
 from activelearn.utils.helper_functions import remove_exclude_attr
+from six.moves import xrange
 
 class EntropyBasedExampleSelector(UncertaintyBasedExampleSelector):
     """
