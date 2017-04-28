@@ -181,14 +181,28 @@ class ActiveLearnerTests(unittest.TestCase):
         #create a model
         model = SVC(probability=True)
         #create a labeler
-        self.selector = {}
-        
+        self.labeler = CliLabeler(self.sample_get_instruction_fn, self.get_example_display_fn, {'y': 1, 'n': 0})
         label_attr = 'label'
         
-        #create a selector
-        self.selector  = EntropyBasedExampleSelector()
+        #mock user labels
+        user_labels = [[0],[1]]
+        
+        #create mock labeled data
+        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0]]
+        gold_labeled_data1[label_attr] = user_labels[0]
+        gold_labeled_data2 = self.unlabeled_dataset.iloc[[1]]
+        gold_labeled_data2[label_attr] = user_labels[1]
+        
+        
+        #Mock the labeler to return gold data
+        self.labeler.label = MagicMock()
+        self.labeler.label.side_effect = [gold_labeled_data1, gold_labeled_data2]
+        label_attr = 'label'
+        
+        #create a dummy selector
+        selector  = {}
         #create a learner
-        alearner = ActiveLearner(model, self.selector, self.labeler, 2, 2)
+        alearner = ActiveLearner(model, selector, self.labeler, 2, 2)
         
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
         assert_equal(0,0)
