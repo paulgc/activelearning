@@ -2,13 +2,13 @@
 import operator
 import pandas as pd
 import time
-from activelearn.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
+from activelearn.exampleselector.uncertainty_based_example_selector import UncertaintyBasedExampleSelector
 
 from activelearn.utils.validation import validate_input_table
 from activelearn.utils.validation import validate_attr
 from activelearn.utils.helper_functions import remove_exclude_attr
 
-class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
+class EntropyBasedExampleSelector(UncertaintyBasedExampleSelector):
     """
     Entropy based Uncertainty example selection
     """

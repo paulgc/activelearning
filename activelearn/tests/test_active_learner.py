@@ -50,9 +50,9 @@ class ActiveLearnerTests(unittest.TestCase):
         user_labels = [[0],[1]]
         
         #create mock labeled data
-        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0]]
+        gold_labeled_data1 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[0]])
         gold_labeled_data1[label_attr] = user_labels[0]
-        gold_labeled_data2 = self.unlabeled_dataset.iloc[[1]]
+        gold_labeled_data2 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[1]])
         gold_labeled_data2[label_attr] = user_labels[1]
         
         #Mock the labeler to return gold data
@@ -82,12 +82,12 @@ class ActiveLearnerTests(unittest.TestCase):
         label_attr = 'label'
         
         #mock user labels
-        user_labels = [[0,1],[2,3]]
+        user_labels = [[0,1],[0,1]]
         
         #create mock labeled data
-        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0,1]]
+        gold_labeled_data1 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[0,1]])
         gold_labeled_data1[label_attr] = user_labels[0]
-        gold_labeled_data2 = self.unlabeled_dataset.iloc[[2,3]]
+        gold_labeled_data2 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[2,3]])
         gold_labeled_data2[label_attr] = user_labels[1]
         
         #Mock the labeler to return gold data
@@ -116,11 +116,11 @@ class ActiveLearnerTests(unittest.TestCase):
         user_labels = [[0,0,0,1],[1,0,0,0], [1,0]]
         
         #create mock labeled data
-        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0,1,2,3]]
+        gold_labeled_data1 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[0,1,2,3]])
         gold_labeled_data1[label_attr] = user_labels[0]
-        gold_labeled_data2 = self.unlabeled_dataset.iloc[[4,5,6,7]]
+        gold_labeled_data2 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[4,5,6,7]])
         gold_labeled_data2[label_attr] = user_labels[1]
-        gold_labeled_data3 = self.unlabeled_dataset.iloc[[8,9]]
+        gold_labeled_data3 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[8,9]])
         gold_labeled_data3[label_attr] = user_labels[2]
         
         #Mock the labeler to return gold data
@@ -146,9 +146,9 @@ class ActiveLearnerTests(unittest.TestCase):
         user_labels = [[0],[1]]
         
         #create mock labeled data
-        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0]]
+        gold_labeled_data1 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[0]])
         gold_labeled_data1[label_attr] = user_labels[0]
-        gold_labeled_data2 = self.unlabeled_dataset.iloc[[1]]
+        gold_labeled_data2 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[1]])
         gold_labeled_data2[label_attr] = user_labels[1]
         
         #Mock the labeler to return gold data
@@ -195,9 +195,9 @@ class ActiveLearnerTests(unittest.TestCase):
         user_labels = [[0],[1]]
         
         #create mock labeled data
-        gold_labeled_data1 = self.unlabeled_dataset.iloc[[0]]
+        gold_labeled_data1 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[0]])
         gold_labeled_data1[label_attr] = user_labels[0]
-        gold_labeled_data2 = self.unlabeled_dataset.iloc[[1]]
+        gold_labeled_data2 = pd.DataFrame.copy(self.unlabeled_dataset.iloc[[1]])
         gold_labeled_data2[label_attr] = user_labels[1]
         
         
@@ -212,4 +212,3 @@ class ActiveLearnerTests(unittest.TestCase):
         alearner = ActiveLearner(model, selector, self.labeler, 2, 2)
         
         alearner.learn(self.unlabeled_dataset, self.labeled_dataset_seed, exclude_attrs=['_id', 'l_ID', 'r_ID'], context=self.context, label_attr='label')
-        assert_equal(0,0)

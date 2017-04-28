@@ -21,13 +21,13 @@ class CliLabeler(Labeler):
 					the necessary data to obtain the 
 					raw representation of the feature
 					vector to be labeled. This function
-					will provide the neccessary logic
+					will provide the necessary logic
 					to obtain the raw representation of
 					the examples to be labeled using the
 					provided context.
     Attributes:
-        get_instruction_fn (Function)
-        get_example_display_fn (Function)
+        get_instruction_fn (Function): An attribute to store the get_instruction_fn
+        get_example_display_fn (Function): An attribute to store the get_example_display_fn
     """
     def __init__(self, get_instruction_fn, get_example_display_fn, labels):
         self.get_instruction_fn = get_instruction_fn
@@ -45,6 +45,19 @@ class CliLabeler(Labeler):
         
     def label(self, examples_to_label, context, label_attr='label'):
         """
+        Queries the labels of the instances to be queried from oracle
+        
+        Args:
+            examples_to_label (Pandas Dataframe): 
+            
+            context (dictionary): A dictionary containing all the necessary
+                                  context for the labeling function
+            
+            label_attr (string): The name of the attribute which contains the labels 
+                                 of the instances
+            
+        Returns:
+            A dataframe containing the labeled examples
         
         """
         # check if the input examples_to_label is a dataframe
