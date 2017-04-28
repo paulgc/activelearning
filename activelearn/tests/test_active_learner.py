@@ -9,10 +9,11 @@ import os
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
-from activelearning.exampleselector.entropy_based_example_selector import EntropyBasedExampleSelector
-from activelearning.labeler.cli_labeler import CliLabeler
-from activelearning.activelearner.active_learner import ActiveLearner
-from activelearning.utils.validation import validate_attr
+from activelearn.exampleselector.entropy_based_example_selector import EntropyBasedExampleSelector
+from activelearn.labeler.cli_labeler import CliLabeler
+from activelearn.activelearner.active_learner import ActiveLearner
+from activelearn.utils.validation import validate_attr
+
 class ActiveLearnerTests(unittest.TestCase):
     
     def sample_get_instruction_fn(self, context):

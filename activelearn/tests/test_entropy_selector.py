@@ -8,7 +8,7 @@ import operator
 import os
 
 from sklearn import linear_model
-from activelearning.exampleselector.entropy_based_example_selector import EntropyBasedExampleSelector
+from activelearn.exampleselector.entropy_based_example_selector import EntropyBasedExampleSelector
 
 class EntropySelectorTests(unittest.TestCase):
     def setUp(self):

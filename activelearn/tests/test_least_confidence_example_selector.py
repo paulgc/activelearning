@@ -8,7 +8,7 @@ import operator
 import os
 
 from sklearn import linear_model
-from activelearning.exampleselector.least_confidence_based_example_selector import LeastConfidenceExampleSelector
+from activelearn.exampleselector.least_confidence_based_example_selector import LeastConfidenceExampleSelector
 
 class LeastConfidenceSelectorTests(unittest.TestCase):
     def setUp(self):

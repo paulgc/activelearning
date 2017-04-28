@@ -8,7 +8,7 @@ import operator
 import os
 
 from sklearn import linear_model
-from activelearning.exampleselector.smallestmargin_based_example_selector import SmallestMarginBasedExampleSelector
+from activelearn.exampleselector.smallestmargin_based_example_selector import SmallestMarginBasedExampleSelector
 
 class SmallestMarginSelectorTests(unittest.TestCase):
     def setUp(self):
