@@ -5,7 +5,6 @@ from activelearn.utils.helper_functions import remove_exclude_attr
 from activelearn.labeler.labeler import Labeler
 from activelearn.exampleselector.example_selector import ExampleSelector
 
-import time
 class ActiveLearner(object):
     """
     A class which allows to learn a given model by actively querying the labels
@@ -40,10 +39,10 @@ class ActiveLearner(object):
               label_attr='label', not_sure_label_allowed=False):
         """
         Performs the Active Learning Loop to help learn the model by querying 
-	the labels of the instances
+	    the labels of the instances
         
         Args:
-            unlabeled_dataset (DataFrame): A Datframe containing unlabeled
+        unlabeled_dataset (DataFrame): A Datframe containing unlabeled
 					   examples
             
 	    seed (DataFrame): A Dataframe containing initial labeled examples

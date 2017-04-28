@@ -52,7 +52,7 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
         feature_attrs = remove_exclude_attr(list(unlabeled_dataset.columns), exclude_attrs, unlabeled_dataset)
 
         feature_values = unlabeled_dataset[feature_attrs]
-
+        
         # compute the prediction probabilities for the unlabeled dataset
         probabilities = model.predict_proba(feature_values) 
 
@@ -63,5 +63,5 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
         
         candidate_examples = sorted(entropies.items(), key=operator.itemgetter(1), reverse=True)[:min(batch_size, len(entropies))]
 
-        next_batch_idxs = map(lambda val: val[0], candidate_examples)
+        next_batch_idxs = [val[0] for val in candidate_examples]
         return unlabeled_dataset.iloc[next_batch_idxs]

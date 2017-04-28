@@ -55,7 +55,6 @@ class SmallestMarginBasedExampleSelector(UncertainityBasedExampleSelector):
             margins[i] = self._compute_margin(probabilities[i])
         # compute the margin of uncertainity for the unlabeled pairs
         candidate_examples = sorted(margins.items(), key=operator.itemgetter(1), reverse=True)[:min(batch_size, len(margins))]
-        next_batch_idxs = []
-        next_batch_idxs = map(lambda val: val[0], candidate_examples)
+        next_batch_idxs = [val[0] for val in candidate_examples]
         return unlabeled_dataset.iloc[next_batch_idxs]
      
