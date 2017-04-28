@@ -2,11 +2,11 @@
 import operator
 import pandas as pd
 import time
-from activelearning.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
+from activelearn.exampleselector.uncertainity_based_example_selector import UncertainityBasedExampleSelector
 
-from activelearning.utils.validation import validate_input_table
-from activelearning.utils.validation import validate_attr
-from activelearning.utils.helper_functions import remove_exclude_attr
+from activelearn.utils.validation import validate_input_table
+from activelearn.utils.validation import validate_attr
+from activelearn.utils.helper_functions import remove_exclude_attr
 
 class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
     
@@ -26,14 +26,14 @@ class EntropyBasedExampleSelector(UncertainityBasedExampleSelector):
         Used to select examples.
 
         Args:
-            model (Model): An attribute to store the tokenizer.
-            unlabeled_dataset (int): An attribute to store the overlap threshold value.
-            exclude_attr (string): An attribute to store the comparison operator.
-            batch_size (boolean): An attribute to store the value of the flag 
+            model (Model): 
+            unlabeled_dataset (int): 
+            exclude_attr (string): 
+            batch_size (boolean): 
                 allow_missing.
     
         Attributes:
-            model (Model): An attribute to store the tokenizer.
+            model (Model): 
             example_selector (int): An attribute to store the overlap threshold value.
             labeler (string): An attribute to store the comparison operator.
             batch_size (boolean): An attribute to store the value of the flag 
