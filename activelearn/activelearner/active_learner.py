@@ -52,7 +52,9 @@ class ActiveLearner(object):
 	    
 	    context (dictionary): A dictionary containing all the necessary
 	                context for the labeling function
-			
+		
+		label_attr (string): A string indicating the name of the label 
+		            column in the labeled dataset. Defaults to label
 	  
         Returns:
            A learned model  
