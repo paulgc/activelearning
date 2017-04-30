@@ -30,11 +30,12 @@ class EntropyBasedExampleSelector(UncertaintyBasedExampleSelector):
 
         Args:
             model (Model): Model that is used to compute the uncertainty measure of the example
-            unlabeled_dataset (Pandas DataFrame): A Dataframe containing unlabeled examples
+            unlabeled_dataset (Pandas DataFrame): A DataFrame containing unlabeled examples
             exclude_attrs (list): Attributes which are not feature attributes.
             batch_size (number): The number of examples to select
+        
         Returns:
-            The informative examples
+            The table of most informative examples to be labeled (DataFrame)
         """
         # check if the input candset is a dataframe
         validate_input_table(unlabeled_dataset, 'unlabeled dataset')

@@ -26,7 +26,7 @@ class LeastConfidenceExampleSelector(UncertaintyBasedExampleSelector):
                 The table of most informative examples to be labeled (DataFrame)
             """
             validate_input_table(unlabeled_dataset, 'unlabeled dataset')
-            #validate exclude attr
+
             for attr in exclude_attrs:
                 validate_attr(attr, unlabeled_dataset.columns, "attr", 'unlabeled_dataset')
                  
