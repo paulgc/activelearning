@@ -2,6 +2,18 @@ from activelearn.labeler.labeler import Labeler
 from activelearn.utils.validation import validate_input_table
 from activelearn.utils.validation import validate_fn
 
+def _default_get_instruction_fn(self):
+    """
+    Displays the default instruction message
+    """
+    return "Enter the Label"
+
+def _default_get_example_display_fn(self, example, context):
+    """
+    By default assume the example is the raw example 
+    """
+    return str(example)
+
 class CliLabeler(Labeler):
     """
     A command line labeler for labeling raw instances
@@ -35,27 +47,17 @@ class CliLabeler(Labeler):
         labels: An attribute to store the labels dictionary
     """
     
-    def __init__(self, get_instruction_fn, get_example_display_fn, labels):
+    def __init__(self, labels, get_instruction_fn = _default_get_instruction_fn, get_example_display_fn = _default_get_example_display_fn, not_sure_label=None):
         validate_fn(get_instruction_fn)
         validate_fn(get_example_display_fn)
         self.get_instruction_fn = get_instruction_fn
         self.get_example_display_fn = get_example_display_fn
+        self.not_sure_label = not_sure_label
         self.labels = labels
  
     def _input_from_stdin(self, banner_str):
         return raw_input(banner_str)
     
-    def _default_get_instruction_fn(self):
-        """
-        Displays the default instruction message
-        """
-        return "Enter the Label"
-    
-    def _default_get_example_display_fn(self, example, context):
-        """
-        By default assume the example is the raw example 
-        """
-        return str(example)
     
     def validate_label_input(self, raw_label_str):
         if self.labels.has_key(raw_label_str):
@@ -89,12 +91,19 @@ class CliLabeler(Labeler):
         
         user_labels = []
         
+        examples_marked_as_not_sure = []
+        
         for example in examples_to_label.iterrows():
             #Fetch and display the raw example to be labeled
             label_str = self._input_from_stdin(
-                            self.get_example_display_fn(example, context))
+                            self.get_example_display_fn(example, context)) 
             if self.validate_label_input(label_str):
-                user_labels.append(self.labels[label_str])
+                #if user knows the label 
+                if (label_str is not self.not_sure_label):
+                    user_labels.append(self.labels[label_str])
+                else:                           #if user is not sure of the label
+                    examples_marked_as_not_sure.append(example)
+                    examples_to_label.drop(example.index, inplace=True)
             else:
                 #Display error message if user enters a wrong label
                 print("Incorrect Label. Pls try again")
