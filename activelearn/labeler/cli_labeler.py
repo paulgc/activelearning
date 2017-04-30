@@ -26,10 +26,15 @@ class CliLabeler(Labeler):
 					to obtain the raw representation of
 					the examples to be labeled using the
 					provided context.
+					
+		labels (Dictionary): A dictionary with the label text and values
+		
     Attributes:
         get_instruction_fn (Function): An attribute to store the get_instruction_fn
         get_example_display_fn (Function): An attribute to store the get_example_display_fn
+        labels: An attribute to store the labels dictionary
     """
+    
     def __init__(self, get_instruction_fn, get_example_display_fn, labels):
         validate_fn(get_instruction_fn)
         validate_fn(get_example_display_fn)
@@ -40,12 +45,25 @@ class CliLabeler(Labeler):
     def _input_from_stdin(self, banner_str):
         return raw_input(banner_str)
     
+    def _default_get_instruction_fn(self):
+        """
+        Displays the default instruction message
+        """
+        return "Enter the Label"
+    
+    def _default_get_example_display_fn(self, example, context):
+        """
+        By default assume the example is the raw example 
+        """
+        return str(example)
+    
     def validate_label_input(self, raw_label_str):
         if self.labels.has_key(raw_label_str):
             return True
         else:
             return False
-        
+    
+    
     def label(self, examples_to_label, context, label_attr='label'):
         """
         Queries the labels of the instances to be queried from oracle
