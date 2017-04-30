@@ -17,3 +17,8 @@ def validate_attr(attr, table_cols, attr_label, table_label):
                              table_label) 
     return True
 
+def validate_fn(attr):
+    """Check if the attribute is a function"""
+    if not callable(attr):
+        raise TypeError(attr + ' is not a function')
+    return True

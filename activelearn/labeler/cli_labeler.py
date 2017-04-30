@@ -1,5 +1,6 @@
 from activelearn.labeler.labeler import Labeler
 from activelearn.utils.validation import validate_input_table
+from activelearn.utils.validation import validate_fn
 
 class CliLabeler(Labeler):
     """
@@ -7,7 +8,7 @@ class CliLabeler(Labeler):
     
     Args:
         get_instruction_fn (Function): 	User provided function which specifies 
-				       	the instruction is to be displayed to
+				       	the instruction to be displayed to
 				       	the user before a particular example's
 				        label is queried from the user.
 
@@ -30,6 +31,8 @@ class CliLabeler(Labeler):
         get_example_display_fn (Function): An attribute to store the get_example_display_fn
     """
     def __init__(self, get_instruction_fn, get_example_display_fn, labels):
+        validate_fn(get_instruction_fn)
+        validate_fn(get_example_display_fn)
         self.get_instruction_fn = get_instruction_fn
         self.get_example_display_fn = get_example_display_fn
         self.labels = labels
@@ -48,7 +51,7 @@ class CliLabeler(Labeler):
         Queries the labels of the instances to be queried from oracle
         
         Args:
-            examples_to_label (Pandas Dataframe): 
+            examples_to_label (Dataframe): 
             
             context (dictionary): A dictionary containing all the necessary
                                   context for the labeling function
