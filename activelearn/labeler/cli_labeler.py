@@ -57,7 +57,7 @@ class CliLabeler(Labeler):
                                  of the instances
             
         Returns:
-            A dataframe containing the labeled examples
+            A table of examples with labels annotated by the user (DataFrame)
         
         """
         # check if the input examples_to_label is a dataframe

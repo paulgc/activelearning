@@ -23,7 +23,7 @@ class LeastConfidenceExampleSelector(UncertaintyBasedExampleSelector):
                 batch_size (number): The number of examples to select
         
             Returns:
-                The informative examples
+                The table of most informative examples to be labeled (DataFrame)
             """
             validate_input_table(unlabeled_dataset, 'unlabeled dataset')
             #validate exclude attr
